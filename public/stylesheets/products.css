@@ -1,0 +1,20 @@
+*{
+  box-sizing: border-box;
+}
+main{
+  background-color: pink;
+}
+h1{
+  color: red;
+}
+
+section{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+article{
+  width: 270px;
+  border: 1px solid black;
+}
