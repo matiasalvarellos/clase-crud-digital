@@ -19,11 +19,11 @@
     <main >
       <div class="form-container">
 
-        <form action="" method="">
+        <form action="/products/create" method="POST">
   
           <div class="field-wrap">
             <label for="marca">Marca:</label>
-            <input type="text" name="milanesa" id="marca">
+            <input type="text" name="mark" id="marca">
           </div>
           
           <div class="field-wrap" >
@@ -37,19 +37,23 @@
           </div>
   
           <div >
-            <p>Colores:</p>
+            <p>Color del auto:</p>
             <div>
-              <input type="checkbox" id="rj" value="rojo" name="color">
+              <input type="radio" id="rj" value="red" name="color">
               <label for="rj">Rojo</label> 
             </div>
             <div>
-              <input type="checkbox" id="gs" value="gris" name="color">
+              <input type="radio" id="gs" value="gray" name="color">
               <label for="gs">Gris</label>
             </div>
             <div>
-              <input type="checkbox" id="ng" value="negro" name="color">
+              <input type="radio" id="ng" value="negro" name="color">
               <label for="ng">Negro</label>
-            </div> 
+            </div>
+            <div>
+              <input type="radio" id="wt" value="white" name="color">
+              <label for="ng">white</label>
+            </div>  
           </div>
 
           <div class="field-wrap">
@@ -57,8 +61,8 @@
               Crear producto
             </button>
           </div>
-          
         </form>
+        
       </div>
     </main>
     <%- include("partials/footer.ejs") %>

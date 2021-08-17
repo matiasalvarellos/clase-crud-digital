@@ -23,17 +23,17 @@
   
           <div class="field-wrap">
             <label for="marca">Marca:</label>
-            <input type="text" name="mark" id="marca">
+            <input type="text" value="<%= auto.mark %>" name="mark" id="marca">
           </div>
           
           <div class="field-wrap" >
             <label for="modelo">Modelo:</label>
-            <input type="text" name="model"  id="modelo">
+            <input type="text" value="<%= auto.model %>" name="model"  id="modelo">
           </div>
   
           <div class="field-wrap">
             <label for="precio">Precio:</label>
-            <input type="number" name="price" id="precio">
+            <input type="number" value="<%= auto.price %>" name="price" id="precio">
           </div>
   
           <div >
@@ -48,7 +48,7 @@
               <label for="gr">Gris</label>
             </div>
             <div>
-              <input type="radio" value="black" id="ng" name="color">
+              <input type="radio" value="black" id="ng" checked name="color">
               <label for="ng">Negro</label>
             </div>
              <div>
@@ -58,22 +58,23 @@
           </div>
 
           <div class="field-wrap">
-
+    
             <button type="submit">
               Editar
             </button>
 
           </div>
         </form>
-
+        
         <form action="/products/delete/<%= auto.id %>?_method=DELETE" method="POST">
           <button type="submit">
-            Borrar producto
+            Borrar
           </button>
         </form>
-
+      
       </div>
     </main>
+    <%- include("partials/footer.ejs") %> 
 
   </body>
 </html>

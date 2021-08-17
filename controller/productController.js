@@ -2,89 +2,91 @@ const fs = require("fs");
 const path = require("path");
 
 function findAll(){
+  //leer el json
+  let autosJson= fs.readFileSync(path.join(__dirname, "../data/autos.json"))
 
-  //leer archivo json
-  let autosJson = fs.readFileSync(path.join(__dirname, "../data/autos.json"));
   //parsear la inform
-  return JSON.parse(autosJson);
+  let data = JSON.parse(autosJson)
+  return data
 }
 
 function writeJson(array){
-  //convertir en string la inform
-  let jsonData = JSON.stringify(array, null, " ");
+  //transformamos en un string
+  let arrayJson = JSON.stringify(array);
+  
+  //procesamos la inform en el Json
+  return fs.writeFileSync(path.join(__dirname, "../data/autos.json"), arrayJson);
 
-  //guardar en json
-  return fs.writeFileSync(path.join(__dirname, "../data/autos.json"), jsonData)
 }
 
 const productController = {
 
   list: function(req, res){
-    //obtener autos
-    let autos = findAll();
-    
+    //obtenemos todos los autos
+    let autos = findAll() ;  
 
-    //generar una respuesta al usuario
-    res.render("list", { autos:autos })
+    //devuelvo la respuesta
+    res.render("list", { autos } )
+
   },
-  detail: function(req,res){
-    //obtener autos
-    let autos = findAll()
-    
-    //buscar el auto
-    let autoEncontrado =  autos.find(function(auto){
+  detail: function(req, res){
+    //obtememos todos los autos
+    let autos = findAll();
+
+    //busco el producto
+    let autoEncontrado = autos.find(function(auto){
       return auto.id == req.params.id
     })
 
-    //evaluar que encontre el auto y generar una respuesta
-    if(!autoEncontrado){
-      return res.send("error")
-    }
-    res.render("detail", { auto: autoEncontrado })
+    //duvuelvo la respuesta
+    res.render("detail", {auto: autoEncontrado})
 
   },
   create: function(req, res){
-    res.render("product-create-form")
+
+    //duelvo la respuesta
+    res.render("product-create-form.ejs")
+
   },
   store: function(req, res){
-    //obtengo los autos
+    //busco todos los autos
     let autos = findAll()
-    let nuevoId = autos.length + 1;
 
-    //creo el nuevo auto y construyo nuevo array
-    let nuevoProducto = {
-      id: nuevoId,
-      mark: req.body.mark,
-      model: req.body.model ,
+    //creo un nuevo auto
+    let nuevoAuto = {
+      id: autos.length + 1 ,
+      mark: req.body.mark ,
+      model: req.body.model,
       price: req.body.price ,
-      color: req.body.color 
+      color: req.body.color
     }
+    
+    let autosActualizados = [...autos, nuevoAuto]
 
-    let newCars = [nuevoProducto, ...autos]
+    //escribo el json
+    writeJson(autosActualizados);
 
-    //agregarlo al json 
-    writeJson(newCars);
-
-    res.redirect("/product/list")
-
+    //devuelvo una respuesta
+    res.redirect("/products/list");
   },
-  edit: function( req, res){
+  edit: function(req, res){
+    //busco todos los autos
     let autos = findAll()
 
-    //buscar el auto que vamos a editar
-    let autoFound = autos.find(auto=>{
+    //busco un auto
+    let autoEncontrado = autos.find(function(auto){
       return auto.id == req.params.id
     })
 
-    //devolver vista con informacion del auto
-    res.render("product-edit-form", {auto:autoFound})
+    //devuelvo una respuesta
+    res.render("product-edit-form", {auto: autoEncontrado})
   },
   update: function(req, res){
-    //obtengo mis autos
-    let autos = findAll()
+    //obtener autos
+    let autos = findAll();
 
-    //actualizar informacion
-    let autosEditados =  autos.map(function(auto){
+    //actualizo mi array
+    let autosActualizados = autos.map(function(auto){
       if(auto.id == req.params.id){
         auto.mark = req.body.mark
         auto.model = req.body.model
@@ -93,28 +95,28 @@ const productController = {
       }
       return auto
     })
-
-    //escribir el json
-    writeJson(autosEditados);
     
-    res.redirect("/products/list")
+    //escribo el json
+    writeJson(autosActualizados);
+
+    res.redirect("/products/detail/"+req.params.id)
 
   },
   destroy: function(req, res){
-    //obtengo los autos
+    //busco todos los autos
     let autos = findAll()
 
-    //filtramos los autos
-
-    let autosActualizados = autos.filter(function(auto){
+    //filtro los autos que no voy a borrar
+    let dataNueva = autos.filter(function(auto){
       return auto.id != req.params.id
     })
-    
-    writeJson(autosActualizados);
 
-    res.redirect("/products/list")
+    //escribo el json
+    writeJson(dataNueva);
+
+    //devuelvo una respuesta
+    res.redirect("/products/list");
   }
-  
 }
 
 module.exports = productController;

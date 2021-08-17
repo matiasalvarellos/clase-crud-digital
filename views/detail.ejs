@@ -20,22 +20,21 @@
   
     <section class="container">
       <article>
-  
         <div>
           <img src="/images/auto.png" alt="">
         </div>
   
         <p>Caracteristicas:</p>
         <ul>
-          <li>Precio: </li>
-          <li>Marca:</li>
-          <li>Modelo: </li>
-          <li>Color: </li>
-          <li>id:</li>
+          <li>Precio: <%= auto.price %>  </li>
+          <li>Marca: <%= auto.mark %>  </li>
+          <li>Modelo:<%= auto.model %>  </li>
+          <li>Color: <%= auto.color %>  </li>
+          <li>id: <%= auto.id %> </li>
         </ul>
   
         <div>
-          <a href="/products/edit/1">
+          <a href="/products/edit/<%= auto.id %> ">
             <button type="button">Editar:</button>
           </a>
         </div>

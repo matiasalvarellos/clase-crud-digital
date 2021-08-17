@@ -15,22 +15,22 @@
     
     <main>
       <h1>Listado de productos:</h1>
-
       <section class="car-wrap">
-        
         <% autos.forEach(function(auto){ %>
-          <article>
-            <div>
-              <img src="/images/auto.png" alt="">
-            </div>
-            <p>Este auto tiene lo siguiente:</p>
-            <ul>
-              <li>Precio: $<%= auto.price %></li>
-              <li>Marca:<%= auto.mark %> </li>
-              <li>Modelo:<%= auto.model %>  </li>
-            </ul>
-          </article>
-        <% }) %> 
+          <a href="/products/detail/<%= auto.id %>">
+            <article>
+              <div>
+                <img src="/images/auto.png" alt="">
+              </div>
+              <p>Este auto tiene lo siguiente:</p>
+              <ul>
+                <li>Precio: $<%= auto.price %> </li>
+                <li>Marca: <%= auto.mark %> </li>
+                <li>Modelo: <%= auto.model %> </li>
+              </ul>
+            </article>
+          </a>
+          <% }) %> 
         
       </section>
 
