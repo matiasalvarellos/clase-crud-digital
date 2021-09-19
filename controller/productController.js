@@ -1,11 +1,11 @@
 const fs = require("fs");
 const path = require("path");
+const { validationResult } = require("express-validator")
 
 function findAll(){
-  //leer el json
+    
   let autosJson= fs.readFileSync(path.join(__dirname, "../data/autos.json"))
 
-  //parsear la inform
   let data = JSON.parse(autosJson)
   return data
 }
@@ -24,7 +24,7 @@ const productController = {
   list: function(req, res){
     //obtenemos todos los autos
     let autos = findAll() ;  
-
+    
     //devuelvo la respuesta
     res.render("list", { autos } )
 
@@ -45,10 +45,20 @@ const productController = {
   create: function(req, res){
 
     //duelvo la respuesta
-    res.render("product-create-form.ejs")
+    res.render("product-create-form")
 
   },
   store: function(req, res){
+
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+      return res.render("product-create-form", {
+        old: req.body,
+        errors: errors.errors
+      })
+    }
+
     //busco todos los autos
     let autos = findAll()
 
@@ -60,7 +70,7 @@ const productController = {
       price: req.body.price ,
       color: req.body.color
     }
-    
+    //productos actualizados
     let autosActualizados = [...autos, nuevoAuto]
 
     //escribo el json

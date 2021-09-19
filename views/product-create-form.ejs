@@ -12,33 +12,44 @@
 
   </head>
   <body>
+
+    <!-- incluimos el header -->
+
     <%- include("partials/header.ejs") %> 
+
+    <!-- -->
 
     <h1>Crear auto:</h1>
 
     <main >
       <div class="form-container">
 
-        <form action="/products/create" method="POST">
-  
+        <form action="/products/create" enctype="multipart/form-data" method="POST">
+
+          <h3>Agregar imagen</h3>
+
+          <div class="field-wrap">
+            <input type="file" name="image">
+          </div>
+
           <div class="field-wrap">
             <label for="marca">Marca:</label>
-            <input type="text" required name="mark" id="marca">
+            <input type="text" value="<%= typeof old != "undefined" ? old.mark : "" %>" name="mark" id="marca">
           </div>
-          
+
           <div class="field-wrap" >
             <label for="modelo">Modelo:</label>
-            <input type="text" name="model" id="modelo">
+            <input type="text" value="<%= typeof old != "undefined" ? old.model : "" %>" name="model" id="modelo">
           </div>
   
           <div class="field-wrap">
             <label for="precio">Precio:</label>
-            <input type="number" name="price" id="precio">
+            <input type="number" value="<%= typeof old != "undefined" ? old.price : "" %>" name="price" id="precio">
           </div>
   
-          <div >
-            <p>Color del auto:</p>
+          <div>
 
+            <p>Color del auto:</p>
              
             <div>
               <input type="radio" id="rj" value="red" name="color">
@@ -66,8 +77,24 @@
         </form>
         
       </div>
+
+      <%if(typeof errors != "undefined"){ %>
+        <ul>
+
+          <% errors.forEach(function(elem){ %>
+            <li> <%= elem.msg %> </li>
+          <% }) %> 
+
+        </ul>
+      <% } %> 
+
     </main>
+
+    <!-- incluimos el footer  -->
+
     <%- include("partials/footer.ejs") %>
+
+    <!---->
 
   </body>
 </html>

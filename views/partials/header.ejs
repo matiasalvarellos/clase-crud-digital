@@ -16,6 +16,28 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/products/create">Create</a>
           </li>
+          <% if(!userSession){ %>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/users/login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/users/register">Register</a>
+            </li>
+          <% }else{ %>
+
+            <li class="nav-item">
+              <%= userSession.name %> 
+            </li>
+            
+            <li class="nav-item">
+              <form action="/users/logout" method="POST">
+                <button type="submit">
+                  Cerrar Sesión 
+                </button>
+              </form>
+            </li>
+
+          <% } %> 
           
         </ul>
         <form action="" method="GET" class="d-flex">
