@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>Register</title>
+    <style>
+      span{
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include("partials/header") %>
+    <main>
+      <div class="container">
+
+        <form action="/users/register" autocomplete="off" method="POST">
+
+          <div class="mb-3">  
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" value="<%= locals.old ? old.email : "" %>" class="form-control" autocomplete="off" name="email" id="email" aria-describedby="emailHelp">
+            <% if(locals.errors && errors.email){ %>
+              <span> <%= errors.email ? errors.email.msg : "" %> </span>
+            <% } %> 
+          </div>
+
+          <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" value="<%= locals.old ? old.name : "" %>" class="form-control" autocomplete="off" name="name" id="name">
+            <% if(locals.errors && errors.name){ %>
+              <span > <%= errors.name ? errors.name.msg : "" %> </span>
+            <% } %> 
+          </div>
+
+          <div class="mb-3">
+            <label for="last_name" class="form-label">Apellido</label>
+            <input type="text" value="<%= locals.old ? old.last_name : "" %>" class="form-control" autocomplete="off" name="last_name" id="last_name">
+            <% if(locals.errors && errors.last_name){ %>
+              <span > <%= errors.last_name ? errors.last_name.msg : "" %> </span>
+            <% } %> 
+          </div>
+          
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" autocomplete="off" name="password" id="password">
+            <% if(locals.errors && errors.password){ %>
+              <span > <%= errors.password ? errors.password.msg : "" %> </span>
+            <% } %> 
+          </div>
+
+          <div class="mb-3">
+            <label for="avatar" class="form-label"> Avatar</label>
+            <input type="file" class="form-control" id="avatar" name="avatar">
+            <% if(locals.errors && errors.avatar){ %>
+              <span > <%= errors.avatar ? errors.avatar.msg : "" %> </span>
+            <% } %> 
+          </div>
+
+          <div class="mb-3">
+            <button type="submit" class="btn btn-primary">
+              Registrate!
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </main>
+    <%- include("partials/footer") %> 
+  </body>
+</html>
